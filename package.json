@@ -5,7 +5,7 @@
   "author": "Mikael Pettersson <evanion@icloud.com>",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "main": "dist/test.js",
+  "main": "dist/index.js",
   "files": [
     "dist/**/*",
     "*.md"
