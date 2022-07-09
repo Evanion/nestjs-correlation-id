@@ -13,7 +13,7 @@ permissions:
   pull-requests: read
 
 jobs:
-  Setup:
+  Test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -23,23 +23,10 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: yarn.lock
       - run: yarn install --frozen-lockfile --silent
-
-  Lint:
-    runs-on: ubuntu-latest
-    steps:
       - run: yarn lint
-  Build:
-    runs-on: ubuntu-latest
-    steps:
       - run: yarn build
-  Test:
-    runs-on: ubuntu-latest
-    steps:
       - run: yarn test:cov --ci
       - run: yarn test:e2e --ci
-  Analyze:
-    runs-on: ubuntu-latest
-    steps:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
