@@ -1,0 +1,2 @@
+export const CORRELATION_ID_HEADER = 'X-Correlation-Id';
+export const CORRELATION_CONFIG_TOKEN = 'CORRELATION_CONFIG';
