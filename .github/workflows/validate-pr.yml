@@ -13,7 +13,7 @@ permissions:
   pull-requests: read
 
 jobs:
-  Test:
+  Lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -24,7 +24,27 @@ jobs:
           cache-dependency-path: yarn.lock
       - run: yarn install --frozen-lockfile --silent
       - run: yarn lint
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+          cache-dependency-path: yarn.lock
+      - run: yarn install --frozen-lockfile --silent
       - run: yarn build
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+          cache-dependency-path: yarn.lock
+      - run: yarn install --frozen-lockfile --silent
       - run: yarn test:cov --ci
       - run: yarn test:e2e --ci
       - name: SonarCloud Scan
