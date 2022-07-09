@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { CorrelationIdMiddleware } from './correlation-id.middleware';
 import { CorrelationService } from './correlation.service';
 import { CorrelationConfig } from './interfaces/correlation-config.interface';
@@ -15,22 +17,18 @@ const mockCorrelationService: CorrelationService = {
 
 describe('CorrelationIdMiddleware', () => {
   let middleware: CorrelationIdMiddleware;
-  beforeEach(() => {});
-
-  it('should be defined', () => {
-    expect(
-      new CorrelationIdMiddleware(
-        mockCorrelationService,
-        mockCorrelationConfig,
-      ),
-    ).toBeDefined();
-  });
-
-  it('should set the correlation id in request object', () => {
-    const middleware = new CorrelationIdMiddleware(
+  beforeEach(() => {
+    middleware = new CorrelationIdMiddleware(
       mockCorrelationService,
       mockCorrelationConfig,
     );
+  });
+
+  it('should be defined', () => {
+    expect(middleware).toBeDefined();
+  });
+
+  it('should set the correlation id in request object', () => {
     const req = {
       get: jest.fn().mockImplementation(() => ''),
       headers: {},
@@ -47,10 +45,6 @@ describe('CorrelationIdMiddleware', () => {
   });
 
   it('should set the correlation id in response object', () => {
-    const middleware = new CorrelationIdMiddleware(
-      mockCorrelationService,
-      mockCorrelationConfig,
-    );
     const req = {
       get: jest.fn().mockImplementation(() => 'test123'),
       headers: {},
@@ -67,10 +61,6 @@ describe('CorrelationIdMiddleware', () => {
   });
 
   it('should set the correlation id in correlationService', () => {
-    const middleware = new CorrelationIdMiddleware(
-      mockCorrelationService,
-      mockCorrelationConfig,
-    );
     const req = {
       get: jest.fn().mockImplementation(() => 'test123'),
       headers: {},
