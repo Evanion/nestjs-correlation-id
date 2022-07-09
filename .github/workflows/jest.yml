@@ -21,6 +21,7 @@ jobs:
           node-version: 16
           cache: 'yarn'
           cache-dependency-path: yarn.lock
+      - run: yarn install --frozen-lockfile --silent
       - run: yarn build
       - run: yarn test:cov --ci
       - run: yarn test:e2e --ci
