@@ -30,16 +30,16 @@ describe('CorrelationIdMiddleware', () => {
 
   it('should set the correlation id in request object', () => {
     const req = {
-      get: jest.fn().mockImplementation(() => ''),
+      get: jest.fn(),
       headers: {},
     };
     const res = {
-      get: jest.fn().mockImplementation(() => ''),
-      set: jest.fn().mockImplementation((key: string, value: string) => {}),
+      get: jest.fn(),
+      set: jest.fn(),
       headers: {},
     };
     jest.spyOn(res, 'set');
-    middleware.use(req as any, res as any, () => {});
+    middleware.use(req as any, res as any, jest.fn());
 
     expect(req.headers['x-correlation-id']).toBe('test123');
   });
@@ -50,8 +50,8 @@ describe('CorrelationIdMiddleware', () => {
       headers: {},
     };
     const res = {
-      get: jest.fn().mockImplementation(() => ''),
-      set: jest.fn().mockImplementation((key: string, value: string) => {}),
+      get: jest.fn(),
+      set: jest.fn(),
       headers: {},
     };
     jest.spyOn(res, 'set');
@@ -66,12 +66,12 @@ describe('CorrelationIdMiddleware', () => {
       headers: {},
     };
     const res = {
-      get: jest.fn().mockImplementation(() => ''),
-      set: jest.fn().mockImplementation((key: string, value: string) => {}),
+      get: jest.fn(),
+      set: jest.fn(),
       headers: {},
     };
     jest.spyOn(res, 'set');
-    middleware.use(req as any, res as any, () => {});
+    middleware.use(req as any, res as any, jest.fn());
 
     expect(mockCorrelationService.setCorrelationId).toHaveBeenCalledWith(
       'test123',
