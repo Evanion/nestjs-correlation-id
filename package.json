@@ -1,6 +1,6 @@
 {
   "name": "@evanion/nestjs-correlation-id",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Transparently forward or add correlation id to all requests",
   "author": "Mikael Pettersson <evanion@icloud.com>",
   "license": "MIT",
