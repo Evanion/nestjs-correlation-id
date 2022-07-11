@@ -18,6 +18,6 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: yarn.lock
       - run: yarn install --frozen-lockfile --silent
-      - run: yarn npm publish --access public
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
