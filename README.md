@@ -84,10 +84,10 @@ In order to add the correlation ID to your logs, you can use the `CorrelationSer
 In the following example, we are using the [@ntegral/nestjs-sentry](https://github.com/ntegral/nestjs-sentry) package, but you can use any package or provider you like.
 
 ```ts
-import { Injectable, NestMiddleware } from '@nestjs/common';
-import { Request, Response } from 'express';
 import { CorrelationService } from '@evanion/nestjs-correlation-id';
+import { Injectable, NestMiddleware } from '@nestjs/common';
 import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
+import { NextFunction, Request, Response } from 'express';
 
 @Injectable()
 export class SentryMiddleware implements NestMiddleware {
@@ -96,9 +96,9 @@ export class SentryMiddleware implements NestMiddleware {
     @InjectSentry() private readonly sentryService: SentryService,
   ) {}
 
-  async use(req: Request, res: Response, next) {
+  async use(_req: Request, _res: Response, next: NextFunction) {
     const correlationId = await this.correlationService.getCorrelationId();
-    this.sentryService.configureScope((scope) => {
+    this.sentryService.instance().configureScope((scope) => {
       scope.setTag('correlationId', correlationId);
     });
     next();
