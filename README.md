@@ -110,15 +110,9 @@ Then add it to your `AppModule`
 
 ```ts
 import { Module } from '@nestjs-common';
-import {
-  SentryModule,
-  ConfigModule,
-  ConfigService,
-} from '@ntegral/nestjs-sentry';
-import {
-  CorrelationModule,
-  CorrelationService,
-} from '@evanion/nestjs-correlation-id';
+import { SentryModule } from '@ntegral/nestjs-sentry';
+import { CorrelationModule } from '@evanion/nestjs-correlation-id';
+import { SentryMiddleware } from './middleware/sentry.middleware';
 
 @Module({
   imports: [
@@ -133,8 +127,6 @@ export class AppModule implements NestModule {
     consumer.apply(CorrelationIdMiddleware).forRoutes('*');
     consumer.apply(SentryMiddleware).forRoutes('*');
   }
-}
-{
 }
 ```
 
