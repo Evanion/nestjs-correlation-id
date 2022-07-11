@@ -6,6 +6,7 @@ test
 .gitignore
 .npmignore
 .prettierrc
+.release-it.json
 jest.config.js
 nest-cli.json
 sonar-project.properties

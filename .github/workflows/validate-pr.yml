@@ -55,3 +55,4 @@ jobs:
         with:
           args: -Dsonar.projectKey=Evanion_nestjs-correlation-id
             -Dsonar.organization=evanion
+            -Dsonar.projectVersion=${{github.run_number}}
