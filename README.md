@@ -77,6 +77,73 @@ export class AppModule implements NestModule {
 }
 ```
 
+#### Add `correlationId` to logs
+
+In order to add the correlation ID to your logs, you can use the `CorrelationService` service to get the current correlationId.
+
+In the following example, we are using the [@ntegral/nestjs-sentry](https://github.com/ntegral/nestjs-sentry) package, but you can use any package or provider you like.
+
+```ts
+import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Request, Response } from 'express';
+import { CorrelationService } from '@evanion/nestjs-correlation-id';
+import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
+
+@Injectable()
+export class SentryMiddleware implements NestMiddleware {
+  constructor(
+    private readonly correlationService: CorrelationService,
+    @InjectSentry() private readonly sentryService: SentryService,
+  ) {}
+
+  async use(req: Request, res: Response, next) {
+    const correlationId = await this.correlationService.getCorrelationId();
+    this.sentryService.configureScope((scope) => {
+      scope.setTag('correlationId', correlationId);
+    });
+    next();
+  }
+}
+```
+
+Then add it to your `AppModule`
+
+```ts
+import { Module } from '@nestjs-common';
+import {
+  SentryModule,
+  ConfigModule,
+  ConfigService,
+} from '@ntegral/nestjs-sentry';
+import {
+  CorrelationModule,
+  CorrelationService,
+} from '@evanion/nestjs-correlation-id';
+
+@Module({
+  imports: [
+    CorrelationModule.forRoot(),
+    SentryModule.forRoot({
+      // ... your config
+    }),
+  ],
+})
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CorrelationIdMiddleware).forRoutes('*');
+    consumer.apply(SentryMiddleware).forRoutes('*');
+  }
+}
+{
+}
+```
+
+If you need to manually set the correlationId anywhere in your application. You can use the `CorrelationService` service to set the correlationId.
+
+```ts
+this.correlationService.setCorrelationId('some_correlation_id');
+```
+
 see [e2e tests](/test) for a fully working example
 
 ## Change Log
