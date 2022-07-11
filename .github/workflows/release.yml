@@ -12,11 +12,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16.x
-          registry-url: 'https://registry.npmjs.org'
-
-      - run: npm publish
+          node-version: 16
+          cache: 'yarn'
+          cache-dependency-path: yarn.lock
+      - run: yarn install --frozen-lockfile --silent
+      - run: yarn npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
