@@ -7,10 +7,11 @@ import {
   NestModule,
 } from '@nestjs/common';
 import * as request from 'supertest';
-import { CorrelationIdMiddleware, CorrelationModule } from 'src';
+import { CorrelationIdMiddleware, CorrelationModule } from '../src';
 import { TestModule } from './test-module/test.module';
 import { HttpService } from '@nestjs/axios';
 import { of } from 'rxjs';
+import { AxiosRequestHeaders } from 'axios';
 
 @Module({
   imports: [CorrelationModule.forRoot(), TestModule],
@@ -38,7 +39,7 @@ describe('CorrelationMiddleware (e2e)', () => {
 
     jest.spyOn(httpService, 'get').mockImplementation(() =>
       of({
-        config: { url: 'http://example.com/test', method: 'GET' },
+        config: { url: 'http://example.com/test', method: 'GET', headers: {} as AxiosRequestHeaders },
         headers: {
           connection: 'keep-alive',
           'content-type': 'application/json',
